@@ -1,5 +1,5 @@
 // Create a graphQL schema that can be used to execute a GraphQL query on the API that returns a string "Hello world!"
-// run with node server.js
+// run with node server.js, but queries are executed from API server
 
 const { graphql, buildSchema } = require('graphql');
 

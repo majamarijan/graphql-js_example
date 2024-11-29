@@ -4,11 +4,15 @@
   "description": "Exercise for graphql-js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server_express.js --no-open"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graphql": "^16.9.0"
+    "express": "^4.21.1",
+    "graphql": "^16.9.0",
+    "graphql-http": "^1.22.3",
+    "nodemon": "^3.1.7",
+    "ruru": "^2.0.0-beta.13"
   }
 }
