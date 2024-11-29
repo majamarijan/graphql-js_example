@@ -8,6 +8,7 @@ const { createHandler } = require('graphql-http/lib/use/express');
 const { ruruHTML } = require('ruru/server');
 
 const path = require('path');
+const { randomUUID } = require('crypto');
 
 app.use(express.static(path.join(__dirname, 'src')));
 app.use(express.json(express.urlencoded({ extended: true })));
@@ -17,12 +18,28 @@ const schema = buildSchema(`
       hello: String,
       id: Int,
       isOpen: Boolean,
-      person: Person
+      person: Person,
+      pokemon: Pokemon
     },
     type Person {
       name: String,
-      id: Int,
+      id: ID!,
+      favNumbers: [Int],
       friends: [Person]
+    },
+    type Pokemon {
+      id: Int,
+      name: String,
+      sprites: Sprites
+    }
+    type Sprites {
+      other: Other
+    }
+    type Other {
+      dream_world: DreamWorld
+    }
+    type DreamWorld {
+      front_default: String
     }
   `);
 
@@ -39,11 +56,13 @@ const root = {
   person() {
     return {
       name: 'John Doe',
-      id: 12,
+      id: randomUUID(),
+      favNumbers: [1, 2, 3],
       friends: [
         {
           name: 'Jane Doe',
           id: 13,
+          favNumbers: [12, 33, 104],
           friends: [
             {
               name: 'John Doe',
@@ -58,6 +77,11 @@ const root = {
       ],
     };
   },
+  async pokemon() {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + Math.floor(Math.random() * 100 + 1));
+    const data = await response.json();
+    return data;
+  }
 };
 
 app.get('/', (_req, res) => {
