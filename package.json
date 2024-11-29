@@ -13,6 +13,7 @@
     "graphql": "^16.9.0",
     "graphql-http": "^1.22.3",
     "nodemon": "^3.1.7",
-    "ruru": "^2.0.0-beta.13"
+    "ruru": "^2.0.0-beta.13",
+    "serve-favicon": "^2.5.0"
   }
 }

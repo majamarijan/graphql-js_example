@@ -6,11 +6,13 @@ const { buildSchema } = require('graphql');
 // graphql-http library mounts the GraphQL API server at /graphql
 const { createHandler } = require('graphql-http/lib/use/express');
 const { ruruHTML } = require('ruru/server');
+const favicon = require('serve-favicon');
 
 const path = require('path');
 const { randomUUID } = require('crypto');
 
 app.use(express.static(path.join(__dirname, 'src')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.json(express.urlencoded({ extended: true })));
 
 const schema = buildSchema(`
@@ -30,7 +32,10 @@ const schema = buildSchema(`
     type Pokemon {
       id: Int,
       name: String,
-      sprites: Sprites
+      sprites: Sprites,
+      cries: Cries,
+      abilities: [Abilities],
+      types: [Types]
     }
     type Sprites {
       other: Other
@@ -40,6 +45,21 @@ const schema = buildSchema(`
     }
     type DreamWorld {
       front_default: String
+    }
+    type Cries {
+      latest: String
+    }
+    type Abilities {
+      ability: Ability
+    }
+    type Ability {
+      name: String
+    }
+    type Types {
+      type: PokemonType
+    }
+    type PokemonType {
+      name: String
     }
   `);
 
@@ -78,7 +98,7 @@ const root = {
     };
   },
   async pokemon() {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + Math.floor(Math.random() * 100 + 1));
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + Math.floor(Math.random() * 200 + 1));
     const data = await response.json();
     return data;
   }
@@ -88,6 +108,7 @@ app.get('/', (_req, res) => {
   res.type('html');
   res.end(ruruHTML({ endpoint: '/graphql' }));
 })
+
 
 // create and use graphql handler
 const handler = createHandler({ schema, rootValue: root });
