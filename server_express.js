@@ -7,16 +7,22 @@ const { buildSchema } = require('graphql');
 const { createHandler } = require('graphql-http/lib/use/express');
 const { ruruHTML } = require('ruru/server');
 
-// const path = require('path');
+const path = require('path');
 
-// app.use(express.static(path.join(__dirname, 'src')));
-// app.use(express.json(), express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'src')));
+app.use(express.json(express.urlencoded({ extended: true })));
 
 const schema = buildSchema(`
     type Query {
       hello: String,
       id: Int,
-      isOpen: Boolean
+      isOpen: Boolean,
+      person: Person
+    },
+    type Person {
+      name: String,
+      id: Int,
+      friends: [Person]
     }
   `);
 
@@ -29,7 +35,29 @@ const root = {
   },
   isOpen() {
     return true;
-  }
+  },
+  person() {
+    return {
+      name: 'John Doe',
+      id: 12,
+      friends: [
+        {
+          name: 'Jane Doe',
+          id: 13,
+          friends: [
+            {
+              name: 'John Doe',
+              id: 12,
+            },
+            {
+              name: 'Mary Doe',
+              id: 14,
+            }
+          ],
+        },
+      ],
+    };
+  },
 };
 
 app.get('/', (_req, res) => {
