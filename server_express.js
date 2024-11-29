@@ -5,10 +5,12 @@ const app = express();
 const { buildSchema } = require('graphql');
 // graphql-http library mounts the GraphQL API server at /graphql
 const { createHandler } = require('graphql-http/lib/use/express');
-const path = require('path');
+const { ruruHTML } = require('ruru/server');
 
-app.use(express.static(path.join(__dirname, 'src')));
-app.use(express.json(), express.urlencoded({ extended: true }));
+// const path = require('path');
+
+// app.use(express.static(path.join(__dirname, 'src')));
+// app.use(express.json(), express.urlencoded({ extended: true }));
 
 const schema = buildSchema(`
     type Query {
@@ -30,7 +32,10 @@ const root = {
   }
 };
 
-
+app.get('/', (_req, res) => {
+  res.type('html');
+  res.end(ruruHTML({ endpoint: '/graphql' }));
+})
 
 // create and use graphql handler
 const handler = createHandler({ schema, rootValue: root });
