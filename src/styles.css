@@ -8,31 +8,48 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
-.header {
+img {
+	width: 100%;
+}
+
+header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	gap: 1.5rem;
-	padding-block: 2rem;
+	padding-block: 3rem;
+	min-height: 80vh;
+	background: #333;
+	color: white;
+}
+
+header img {
+	max-width: 200px;
 }
 
 h1 {
 	font-size: clamp(2.5rem, 5vw, 3.5rem);
-	color: rgb(48, 48, 48);
+	text-align: center;
 }
 
 h3 {
 	font-size: clamp(1.5rem, 5vw, 2rem);
 }
 
+main {
+	padding-block: 2rem;
+	max-width: 80%;
+	margin: 0 auto;
+}
+
 .result {
 	border: 1px solid lightgray;
 	padding: 1rem;
 	border-radius: 0.5rem;
-	margin-block: 2rem;
-	width: 550px;
+	max-width: 550px;
 	height: 300px;
+	margin: 1rem auto;
 	overflow-y: scroll;
 }
 
@@ -55,16 +72,22 @@ h3 {
 	display: flex;
 	gap: 1rem;
 	align-items: center;
+	justify-content: center;
 }
 
 .imagePlaceholder {
-	max-width: 450px;
+	max-width: 850px;
 	min-height: 250px;
 	display: flex;
 	flex-flow: column;
 	align-items: center;
 	justify-content: center;
 	position: relative;
+}
+
+.imagePlaceholder .descriptionBox img {
+	width: 30px;
+	height: 30px;
 }
 
 .imagePlaceholder h3 {
@@ -86,10 +109,18 @@ h3 {
 	align-items: center;
 }
 
+.description p {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 4px;
+}
+
 .description p > span {
-	background: lightblue;
-	padding: 4px 8px;
+	background: #222;
+	color: white;
+	padding: 8px;
 	border-radius: 8px;
+	font-size: 0.8rem;
 }
 
 .imagePlaceholder .reveal {
@@ -116,6 +147,22 @@ h3 {
 	to {
 		transform: rotate(360deg);
 	}
+}
+
+.water {
+	background: #5591b5 !important;
+}
+
+.ground {
+	background-color: rgb(133, 60, 8) !important;
+}
+
+.fire {
+	background: rgb(123, 5, 5) !important;
+}
+
+.fairy {
+	background: rgb(162, 4, 162) !important;
 }
 
 @media all and (max-width: 600px) {
